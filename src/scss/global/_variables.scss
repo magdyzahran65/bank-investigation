@@ -1,0 +1,11 @@
+:root {
+    // colors
+
+    // sizing vars
+    --app-header-height: 50px;
+    --app-footer-height: 50px;
+
+    --min-pages-height: calc(
+        100vh - var(--app-header-height) - var(--app-footer-height)
+    );
+}
