@@ -28,6 +28,9 @@ module.exports = {
         "**/__tests__/*.{j,t}s?(x)",
         "**/tests/unit/**/*.spec.{j,t}s?(x)",
       ],
+      rules: {
+        "prettier/prettier": "off",
+      },
       env: {
         jest: true,
       },
