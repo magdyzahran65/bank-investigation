@@ -51,7 +51,7 @@ export default {
         // setTimeout(() => this.getAllInvestigations(), 700);
         await this.getAllInvestigations();
         await this.getAllRequesters();
-        // await this.getAllRegions();
+        await this.getAllRegions();
         await this.getAllUsers();
     },
     methods: {
