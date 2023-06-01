@@ -66,7 +66,7 @@ export default {
                 });
         },
         async getRegions() {
-            await axios.get(`${BASE_URL}${All_REGIONS}?page=2`).then((res) => {
+            await axios.get(`${BASE_URL}${All_REGIONS}`).then((res) => {
                 console.log(res.data.results);
                 this.regionsList = res.data.results;
             });

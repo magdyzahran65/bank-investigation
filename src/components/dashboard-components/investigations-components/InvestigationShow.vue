@@ -34,19 +34,35 @@ import axios from "axios";
 import { BASE_URL, All_INVESTIGATIONS } from "@/constants/api-url";
 export default {
     name: "InvestigationShow",
-    mounted() {
-        this.getInvestDetails();
+    async mounted() {
+        await this.getInvestDetails();
     },
     directives: {
         ClickOutside,
     },
     methods: {
         async getInvestDetails() {
-            const InvestDetails = await axios.get(
-                `${BASE_URL}${All_INVESTIGATIONS}${this.routerId}`
-            );
-
-            this.investigationData = InvestDetails.data;
+            const InvestDetails = await axios
+                .get(`${BASE_URL}${All_INVESTIGATIONS}${this.routerId}`)
+                .catch((e) => {
+                    console.log(e);
+                    this.AnimationNo();
+                    console.log(e.response.status);
+                    console.log(e.response);
+                });
+            try {
+                this.investigationData = InvestDetails.data;
+                this.AnimationNo();
+            } catch (e) {
+                console.Console(e.response.status);
+            }
+        },
+        AnimationNo() {
+            this.$emit("AnimationNo");
+            console.log("stop animation from invests");
+            // setTimeout(() => {
+            //     // this.showAnimation = false;
+            // }, 2000);
         },
         selectImage(event, index) {
             this.fullImage = index;
