@@ -18,11 +18,10 @@
             </h4>
             <transition name="slide" mode="out-in">
                 <router-view
-                    :investigations="investigations"
-                    :requesters="requesters"
-                    :regions="regions"
-                    :users="users"
+                    @AnimationNo="AnimationNo()"
+                    @animationGo="animationGo()"
                     :cardView="cardView"
+                    :showAnimation="showAnimation"
                 ></router-view>
             </transition>
         </div>
@@ -31,14 +30,7 @@
 <script>
 import LoadingAnimations from "@/components/animations/LoadingAnimations.vue";
 // axios urls
-import axios from "axios";
-import {
-    BASE_URL,
-    All_INVESTIGATIONS,
-    All_REQUESTERS,
-    All_REGIONS,
-    All_USERS,
-} from "@/constants/api-url";
+
 // components ===== >>>>
 import SidebarDashboard from "@/components/dashboard-components/SidebarDashboard.vue";
 export default {
@@ -47,58 +39,13 @@ export default {
         SidebarDashboard,
         LoadingAnimations,
     },
-    async mounted() {
-        // setTimeout(() => this.getAllInvestigations(), 700);
-        await this.getAllInvestigations();
-        await this.getAllRequesters();
-        await this.getAllRegions();
-        await this.getAllUsers();
-    },
-    methods: {
-        // Investigations Component
-        async getAllInvestigations() {
-            const res = await axios.get(`${BASE_URL}${All_INVESTIGATIONS}`);
-            try {
-                // console.log(res);
-                this.investigations = res.data.results;
-                this.AnimationNo();
-            } catch (error) {
-                console.log(error);
-            }
-        },
-        async getAllRequesters() {
-            const res = await axios.get(`${BASE_URL}${All_REQUESTERS}`);
-            try {
-                // console.log(res);
-                this.requesters = res.data.results;
-                this.AnimationNo();
-            } catch (error) {
-                console.log(error);
-            }
-        },
 
-        async getAllUsers() {
-            const res = await axios.get(`${BASE_URL}${All_USERS}`);
-            try {
-                // console.log(res.data);
-                this.users = res.data;
-                this.AnimationNo();
-            } catch (error) {
-                console.log(error);
-            }
-        },
-        async getAllRegions() {
-            const res = await axios.get(`${BASE_URL}${All_REGIONS}`);
-            try {
-                // console.log(res);
-                this.regions = res.data.results;
-                this.AnimationNo();
-            } catch (error) {
-                console.log(error);
-            }
-        },
+    methods: {
         AnimationNo() {
             this.showAnimation = false;
+        },
+        animationGo() {
+            this.showAnimation = true;
         },
     },
     data() {
@@ -125,13 +72,7 @@ export default {
                     iconClass: "fa-solid fa-users",
                 },
             ],
-            // inv component data
-            investigations: [],
-            requesters: [],
-            regions: [],
-            users: [],
             showAnimation: true,
-
             // view card or table
             cardView: false,
         };

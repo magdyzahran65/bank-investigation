@@ -24,8 +24,8 @@ import axios from "axios";
 import { BASE_URL, USER_PROFILE } from "@/constants/api-url";
 export default {
     name: "UserProfileComponent",
-    mounted() {
-        this.getMyProfile();
+    async mounted() {
+        await this.getMyProfile();
     },
     data() {
         return {
@@ -33,21 +33,20 @@ export default {
         };
     },
     methods: {
-        getMyProfile() {
-            axios
+        async getMyProfile() {
+            await axios
                 .get(`${BASE_URL}${USER_PROFILE}`)
                 .then((response) => {
                     if (response.data) {
-                        // console.log(response);
                         this.userProfileData = response.data;
                     } else {
                         console.log("Response data is undefined");
                     }
                 })
-                .catch((error) => {
-                    console.log(error.message);
-                    console.log(error.response.data);
-                    console.log(error.response.status);
+                .catch(() => {
+                    // console.log(error.message);
+                    // console.log(error.response.data);
+                    // console.log(error.response.status);
                 });
         },
     },

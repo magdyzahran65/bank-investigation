@@ -53,15 +53,38 @@
     </div>
 </template>
 <script>
+import axios from "axios";
+import { BASE_URL, All_REGIONS } from "@/constants/api-url";
 export default {
     name: "RegionsComponent",
+
     props: {
-        regions: {
-            type: Array,
-        },
         cardView: {
             type: Boolean,
         },
+    },
+    async mounted() {
+        await this.getAllRegions();
+    },
+    methods: {
+        async getAllRegions() {
+            const res = await axios.get(`${BASE_URL}${All_REGIONS}`);
+            try {
+                this.regions = res.data.results;
+                this.AnimationNo();
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        AnimationNo() {
+            this.$emit("AnimationNo");
+            console.log("stop animation from regions");
+        },
+    },
+    data() {
+        return {
+            regions: [],
+        };
     },
 };
 </script>

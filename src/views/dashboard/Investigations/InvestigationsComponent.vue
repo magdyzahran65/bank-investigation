@@ -26,21 +26,49 @@
 // card component
 import InvestigationCardComponent from "@/components/dashboard-components/investigations-components/InvestigationCardComponent.vue";
 import InvestigationTableComponent from "@/components/dashboard-components/investigations-components/InvestigationTableComponent.vue";
-// import axios from "axios";
-// import { BASE_URL, All_INVESTIGATIONS } from "@/constants/api-url";
+import axios from "axios";
+import { BASE_URL, All_INVESTIGATIONS } from "@/constants/api-url";
+
 export default {
     name: "InvestigationsComponent",
+    async mounted() {
+        await this.getAllInvestigations();
+        // console.table(this.investigations);
+    },
     components: {
         InvestigationCardComponent,
         InvestigationTableComponent,
     },
     props: {
-        investigations: {
-            type: Array,
-        },
         cardView: {
             type: Boolean,
         },
+        showAnimation: {
+            type: Boolean,
+        },
+    },
+    methods: {
+        async getAllInvestigations() {
+            const res = await axios.get(`${BASE_URL}${All_INVESTIGATIONS}`);
+            try {
+                this.investigations = res.data.results;
+                this.AnimationNo();
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        AnimationNo() {
+            this.$emit("AnimationNo");
+            console.log("stop animation from invests");
+            // setTimeout(() => {
+            //     // this.showAnimation = false;
+            // }, 2000);
+        },
+    },
+    data() {
+        return {
+            investigations: [],
+        };
     },
 };
 </script>
@@ -62,16 +90,11 @@ th {
     z-index: -2;
 }
 .invest-card {
-    margin: 10px auto;
     width: 200px;
     min-height: 200px;
     border: 1px solid gray;
-    // border-bottom: none;
-    border-radius: 10px;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
     text-align: center;
-    padding: 0;
+    padding: 5px;
 }
 .invest-id {
     border-bottom: 1px solid gray;

@@ -1,5 +1,5 @@
 <template>
-    <div v-if="cardView" class="row">
+    <div v-if="cardView" class="invest-card-container">
         <div
             class="invest-card"
             v-for="investigation in investigations"
@@ -24,6 +24,15 @@
                 >
                     {{ investigation.inv_status }}
                 </div>
+                <div>
+                    <button class="btn btn-danger investigations-btn-more">
+                        <router-link
+                            class="text-decoration-none"
+                            :to="`/dashboard/investigations/${investigation.id}`"
+                            >More</router-link
+                        >
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -44,3 +53,15 @@ export default {
     },
 };
 </script>
+<style lang="scss" scoped>
+.investigations-btn-more {
+    width: 100%;
+    border-radius: 0px;
+    margin-top: 2px;
+}
+.invest-card-container {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+</style>

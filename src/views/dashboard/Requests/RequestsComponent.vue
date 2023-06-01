@@ -1,5 +1,6 @@
 <template>
     <div class="requests-container">
+        <LoadingAnimations v-if="showAnimation" />
         <div class="requests-img-container">
             <img
                 class="sections-img"
@@ -14,24 +15,47 @@
     </div>
 </template>
 <script>
-import { getAllRequesters } from "@/views/dashboard/AdminDashboardPage.vue";
+import axios from "axios";
+import LoadingAnimations from "@/components/animations/LoadingAnimations.vue";
+import { BASE_URL, All_REQUESTERS } from "@/constants/api-url";
 import ClientComponent from "@/components/dashboard-components/clients/ClientComponent.vue";
 export default {
     name: "RequestsComponent",
     components: {
         ClientComponent,
+        LoadingAnimations,
     },
-    created() {
-        getAllRequesters;
+    async mounted() {
+        await this.getAllRequesters();
     },
     props: {
-        requesters: {
-            type: Array,
-        },
-
         cardView: {
             type: Boolean,
         },
+        showAnimation: {
+            type: Boolean,
+        },
+    },
+    methods: {
+        async getAllRequesters() {
+            const res = await axios.get(`${BASE_URL}${All_REQUESTERS}`);
+            try {
+                // console.log(res);
+                this.requesters = res.data.results;
+                this.AnimationNo();
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        AnimationNo() {
+            this.$emit("AnimationNo");
+            console.log("stop animation from requesters");
+        },
+    },
+    data() {
+        return {
+            requesters: [],
+        };
     },
 };
 </script>

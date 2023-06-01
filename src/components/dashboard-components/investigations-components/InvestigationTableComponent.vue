@@ -55,9 +55,6 @@ export default {
         investigations: {
             type: Array,
         },
-        // showAnimation: {
-        //     type: Boolean,
-        // },
         cardView: {
             type: Boolean,
         },

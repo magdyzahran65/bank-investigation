@@ -14,17 +14,39 @@
     </div>
 </template>
 <script>
+import { BASE_URL, All_USERS } from "@/constants/api-url";
+import axios from "axios";
 import TableEmployees from "@/components/dashboard-components/employees-components/TableEmployees.vue";
 export default {
     name: "EmployeesComponent",
     components: { TableEmployees },
     props: {
-        users: {
-            type: Array,
-        },
         cardView: {
             type: Boolean,
         },
+    },
+    async mounted() {
+        await this.getAllUsers();
+    },
+    methods: {
+        AnimationNo() {
+            this.$emit("AnimationNo");
+            console.log("stop animation from employees");
+        },
+        async getAllUsers() {
+            const res = await axios.get(`${BASE_URL}${All_USERS}`);
+            try {
+                this.users = res.data;
+                this.AnimationNo();
+            } catch (error) {
+                console.log(error);
+            }
+        },
+    },
+    data() {
+        return {
+            users: [],
+        };
     },
 };
 </script>
