@@ -74,6 +74,7 @@ export default {
                 this.AnimationNo();
             } catch (error) {
                 console.log(error);
+                this.AnimationNo();
             }
         },
         AnimationNo() {
