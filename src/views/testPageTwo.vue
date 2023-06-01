@@ -51,8 +51,8 @@ import axios from "axios";
 import { BASE_URL, NEW_USER, All_REGIONS } from "@/constants/api-url";
 export default {
     name: "testPageTwo",
-    mounted() {
-        this.getRegions();
+    async mounted() {
+        await this.getRegions();
     },
     methods: {
         async createNewUser() {
@@ -66,7 +66,7 @@ export default {
                 });
         },
         async getRegions() {
-            await axios.get(`${BASE_URL}${All_REGIONS}`).then((res) => {
+            await axios.get(`${BASE_URL}${All_REGIONS}?page=2`).then((res) => {
                 console.log(res.data.results);
                 this.regionsList = res.data.results;
             });
