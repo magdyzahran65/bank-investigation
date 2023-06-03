@@ -1,32 +1,52 @@
 <template>
-    <div class="investigation-show-page-container">
-        <div
-            v-for="(images, index) in investigationData.images"
-            :key="index"
-            class="investigation-image-container"
-        >
-            <div v-if="fullImage === index" class="full-image-size">
-                <img class="img-full-screen" :src="images.image" alt="" />
-                <button class="btn close-image" @click="fullImage = null">
-                    <i
-                        class="fa-solid fa-rectangle-xmark fa-spin rounded-1 fs-5"
-                    ></i>
-                </button>
-            </div>
-            <img
-                @click="selectImage($event, index)"
-                :src="images.image"
-                alt=""
-                class="investigation-images"
-            />
-        </div>
+    <span>
         <p class="investigation-description">
             Description : {{ investigationData.description }}
         </p>
-        <button @click="goBack()" class="btn btn-success go-back-btn">
-            back
-        </button>
-    </div>
+        <div class="investigation-show-page-container">
+            <div
+                v-for="(images, index) in investigationData.images"
+                :key="index"
+                class="investigation-image-container"
+            >
+                <div v-if="fullImage === index" class="full-image-size">
+                    <div class="download-msg-container">
+                        <span
+                            @click="handleImageDoubleClick()"
+                            class="download-msg"
+                            ><button class="btn">
+                                <i
+                                    class="fa-solid fa-download fa-fade"
+                                ></i></button
+                        ></span>
+                        <img
+                            class="img-full-screen"
+                            :src="images.image"
+                            alt=""
+                            ref="myImage"
+                        />
+                    </div>
+                </div>
+                <img
+                    @click="selectImage($event, index)"
+                    :src="images.image"
+                    alt=""
+                    class="investigation-images"
+                />
+            </div>
+            <button
+                v-show="fullImage !== null"
+                class="btn close-image"
+                @click="fullImage = null"
+            >
+                <i class="fa-solid fa-rectangle-xmark fs-3"></i>
+                <!-- fa-spin -->
+            </button>
+            <button @click="goBack()" class="btn btn-success go-back-btn">
+                back
+            </button>
+        </div>
+    </span>
 </template>
 <script>
 import ClickOutside from "vue-click-outside";
@@ -41,6 +61,18 @@ export default {
         ClickOutside,
     },
     methods: {
+        handleImageDoubleClick() {
+            const imageElement = this.$refs.myImage;
+            const imageSource = imageElement.src;
+
+            // Create a temporary link element
+            const link = document.createElement("a");
+            link.href = imageSource;
+            link.download = "image.jpg";
+
+            // Programmatically trigger the download
+            link.click();
+        },
         async getInvestDetails() {
             const InvestDetails = await axios
                 .get(`${BASE_URL}${All_INVESTIGATIONS}${this.routerId}`)
@@ -59,7 +91,7 @@ export default {
         },
         AnimationNo() {
             this.$emit("AnimationNo");
-            console.log("stop animation from invests");
+            // console.log("stop animation from invests");
             // setTimeout(() => {
             //     // this.showAnimation = false;
             // }, 2000);
@@ -89,6 +121,31 @@ export default {
 </script>
 
 <style lang="scss">
+.download-msg-container {
+    position: relative;
+}
+.download-msg {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: #a4ffd2e0;
+    color: rgb(255 255 255);
+    padding: 0px;
+    border-radius: 10px;
+    margin: 5px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #eac541;
+        color: rgb(255, 255, 255);
+    }
+    & button {
+        font-size: 8pt;
+        text-align: center;
+        background-color: transparent;
+        border: none;
+    }
+}
 .go-back-btn {
     position: absolute;
     bottom: 37px;
@@ -122,17 +179,29 @@ export default {
     width: 98% !important;
     border-radius: 20px;
 }
+
 .close-image {
+    z-index: 999;
     margin: 10px;
     background-color: transparent;
-    color: indianred;
+    color: #dc3545;
     border: none;
+
+    position: absolute;
+    top: 28%;
+    right: 7%;
+
+    & i:hover {
+        color: #ffc107;
+    }
 }
 .investigation-description {
     color: rgb(95, 95, 95);
     padding: 20px;
     border: 1px solid gray;
     border-radius: 10px;
+    width: 90%;
+    margin: 10px auto;
 }
 .full-image-size {
     width: 95%;

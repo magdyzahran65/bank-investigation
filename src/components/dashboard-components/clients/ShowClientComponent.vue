@@ -42,6 +42,11 @@ export default {
     mounted() {
         this.ShowClientDetails();
     },
+    props: {
+        showAnimation: {
+            type: Boolean,
+        },
+    },
     methods: {
         async ShowClientDetails() {
             const id = this.$route.params.id;
@@ -52,12 +57,18 @@ export default {
             try {
                 console.log(getClientDetails);
                 this.clientDetails = getClientDetails.data;
+                this.AnimationNo();
             } catch (error) {
                 console.error(error);
+                this.AnimationNo();
             }
         },
         goBack() {
             this.$router.back();
+        },
+        AnimationNo() {
+            this.$emit("AnimationNo");
+            // console.log("stop animation from Show clint");
         },
     },
     data() {

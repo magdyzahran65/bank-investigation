@@ -65,9 +65,21 @@ import ClickOutside from "vue-click-outside";
 
 import store from "@/store";
 import { mapGetters } from "vuex";
+import router from "@/router";
 export default {
     name: "AppHeader",
-    created() {},
+    created() {
+        // this.timer = setTimeout(() => this.logOut(), 7200000); // 2 hours in milliseconds
+        this.timer = setTimeout(() => {
+            if (store.state.isLogged && this.$route.name !== "HomeView") {
+                this.logOut();
+                if (this.$route.name !== "HomeView") {
+                    router.replace({ name: "HomeView" });
+                }
+                console.log("logged out");
+            }
+        }, 3600000);
+    },
     directives: {
         ClickOutside,
     },
@@ -83,7 +95,7 @@ export default {
             localStorage.removeItem("bearer");
             store.state.isLogged = false;
             this.showDropMenu = false;
-            this.$router.push({ name: "HomeView" }).catch(() => {});
+            router.replace({ name: "HomeView" }).catch(() => {});
         },
         hideDropdown() {
             this.showDropMenu = false;

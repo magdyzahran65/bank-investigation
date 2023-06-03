@@ -90,6 +90,8 @@ export default {
 }
 .content {
     color: rgb(219, 96, 96);
+    min-height: 100%;
+    overflow: auto;
 }
 .slide-enter-active {
     animation: transitionSliderIn 0.8s ease-in-out;
