@@ -14,9 +14,9 @@
     </div>
 </template>
 <script>
-import { BASE_URL, All_USERS } from "@/constants/api-url";
-import axios from "axios";
 import TableEmployees from "@/components/dashboard-components/employees-components/TableEmployees.vue";
+
+import { getAllUsers } from "@/functions/axiosFunctions";
 export default {
     name: "EmployeesComponent",
     components: { TableEmployees },
@@ -26,21 +26,12 @@ export default {
         },
     },
     async mounted() {
-        await this.getAllUsers();
+        await getAllUsers(this);
     },
     methods: {
         AnimationNo() {
             this.$emit("AnimationNo");
-            console.log("stop animation from employees");
-        },
-        async getAllUsers() {
-            const res = await axios.get(`${BASE_URL}${All_USERS}`);
-            try {
-                this.users = res.data;
-                this.AnimationNo();
-            } catch (error) {
-                console.log(error);
-            }
+            // console.log("stop animation from employees");
         },
     },
     data() {

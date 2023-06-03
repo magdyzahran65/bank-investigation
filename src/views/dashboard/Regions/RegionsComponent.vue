@@ -53,8 +53,7 @@
     </div>
 </template>
 <script>
-import axios from "axios";
-import { BASE_URL, All_REGIONS } from "@/constants/api-url";
+import { getAllRegions } from "@/functions/axiosFunctions";
 export default {
     name: "RegionsComponent",
 
@@ -64,22 +63,12 @@ export default {
         },
     },
     async mounted() {
-        await this.getAllRegions();
+        await getAllRegions(this);
     },
     methods: {
-        async getAllRegions() {
-            const res = await axios.get(`${BASE_URL}${All_REGIONS}`);
-            try {
-                this.regions = res.data.results;
-                this.AnimationNo();
-            } catch (error) {
-                console.log(error);
-                this.AnimationNo();
-            }
-        },
         AnimationNo() {
             this.$emit("AnimationNo");
-            console.log("stop animation from regions");
+            // console.log("stop animation from regions");
         },
     },
     data() {

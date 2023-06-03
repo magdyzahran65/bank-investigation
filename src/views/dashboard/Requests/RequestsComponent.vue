@@ -15,10 +15,10 @@
     </div>
 </template>
 <script>
-import axios from "axios";
 import LoadingAnimations from "@/components/animations/LoadingAnimations.vue";
-import { BASE_URL, All_REQUESTERS } from "@/constants/api-url";
 import ClientComponent from "@/components/dashboard-components/clients/ClientComponent.vue";
+
+import { getAllRequesters } from "@/functions/axiosFunctions";
 export default {
     name: "RequestsComponent",
     components: {
@@ -26,7 +26,7 @@ export default {
         LoadingAnimations,
     },
     async mounted() {
-        await this.getAllRequesters();
+        await getAllRequesters(this);
     },
     props: {
         cardView: {
@@ -37,19 +37,9 @@ export default {
         },
     },
     methods: {
-        async getAllRequesters() {
-            const res = await axios.get(`${BASE_URL}${All_REQUESTERS}`);
-            try {
-                // console.log(res);
-                this.requesters = res.data.results;
-                this.AnimationNo();
-            } catch (error) {
-                console.log(error);
-            }
-        },
         AnimationNo() {
             this.$emit("AnimationNo");
-            console.log("stop animation from requesters");
+            // console.log("stop animation from requesters");
         },
     },
     data() {

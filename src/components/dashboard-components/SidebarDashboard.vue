@@ -67,6 +67,7 @@ export default {
 <style lang="scss">
 .dashboard-page-sidebar-container {
     position: relative;
+    min-height: 100vh;
 }
 .toggle-admin-sidebar-btn {
     position: absolute;

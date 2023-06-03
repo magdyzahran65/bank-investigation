@@ -26,14 +26,13 @@
 // card component
 import InvestigationCardComponent from "@/components/dashboard-components/investigations-components/InvestigationCardComponent.vue";
 import InvestigationTableComponent from "@/components/dashboard-components/investigations-components/InvestigationTableComponent.vue";
-import axios from "axios";
-import { BASE_URL, All_INVESTIGATIONS } from "@/constants/api-url";
+
+import { getAllInvestigations } from "@/functions/axiosFunctions.js";
 
 export default {
     name: "InvestigationsComponent",
     async mounted() {
-        await this.getAllInvestigations();
-        // console.table(this.investigations);
+        await getAllInvestigations(this);
     },
     components: {
         InvestigationCardComponent,
@@ -48,18 +47,18 @@ export default {
         },
     },
     methods: {
-        async getAllInvestigations() {
-            const res = await axios.get(`${BASE_URL}${All_INVESTIGATIONS}`);
-            try {
-                this.investigations = res.data.results;
-                this.AnimationNo();
-            } catch (error) {
-                console.log(error);
-            }
-        },
+        // async getAllInvestigations() {
+        //     const res = await axios.get(`${BASE_URL}${All_INVESTIGATIONS}`);
+        //     try {
+        //         this.investigations = res.data.results;
+        //         this.AnimationNo();
+        //     } catch (error) {
+        //         console.log(error);
+        //     }
+        // },
         AnimationNo() {
             this.$emit("AnimationNo");
-            console.log("stop animation from invests");
+            // console.log("stop animation from invests");
             // setTimeout(() => {
             //     // this.showAnimation = false;
             // }, 2000);

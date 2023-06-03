@@ -7,7 +7,7 @@
         >
             <div v-if="fullImage === index" class="full-image-size">
                 <img class="img-full-screen" :src="images.image" alt="" />
-                <button @click="fullImage = null" class="btn btn-danger">
+                <button class="btn close-image" @click="fullImage = null">
                     <i
                         class="fa-solid fa-rectangle-xmark fa-spin rounded-1 fs-5"
                     ></i>
@@ -17,7 +17,7 @@
                 @click="selectImage($event, index)"
                 :src="images.image"
                 alt=""
-                class=""
+                class="investigation-images"
             />
         </div>
         <p class="investigation-description">
@@ -105,22 +105,28 @@ export default {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: start;
+    align-items: flex-start;
     margin: 0 auto;
     width: 80%;
 }
 .investigation-image-container {
     max-height: 200px;
-    overflow: auto;
-    & img {
+    // overflow: auto;
+    & .investigation-images {
         margin: 10px;
         border-radius: 5px;
-        width: 200px;
+        width: 120px;
     }
 }
 .img-full-screen {
     width: 98% !important;
-    // height: 100%;
+    border-radius: 20px;
+}
+.close-image {
+    margin: 10px;
+    background-color: transparent;
+    color: indianred;
+    border: none;
 }
 .investigation-description {
     color: rgb(95, 95, 95);
@@ -129,16 +135,16 @@ export default {
     border-radius: 10px;
 }
 .full-image-size {
+    width: 95%;
+    // position
     position: absolute;
-    top: 15%;
-    left: 20%;
-    width: 75%;
-    height: 75%;
-    // background-color: rgba(255, 255, 0, 0.392);
+    top: 25%;
+    left: 5%;
+    z-index: 20;
+    // display
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;
-    align-items: center;
-    z-index: 20;
+    align-items: baseline;
 }
 </style>
