@@ -14,8 +14,10 @@ import {
 export async function getAllInvestigations(component) {
     const res = await axios.get(`${BASE_URL}${All_INVESTIGATIONS}`);
     try {
-        component.investigations = res.data.results;
+        // component.investigations = res.data.results;
+        component.investigations = res.data;
         component.AnimationNo();
+        // console.log(res.data);
     } catch (error) {
         console.log(error);
         component.AnimationNo();

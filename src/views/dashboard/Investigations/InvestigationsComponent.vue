@@ -9,15 +9,27 @@
             <h2 class="text-center">Investigations</h2>
         </div>
         <div class="container-fluid" style="margin: 30px auto">
-            <!-- card view -->
-            <InvestigationCardComponent
-                :investigations="investigations"
-                :cardView="cardView"
-            />
+            <div>
+                <label>Status</label>
+                <select class="text-secondary m-2 rounded" v-model="invStatus">
+                    <option value="">All</option>
+                    <option value="done">Done</option>
+                    <option value="pending">Pending</option>
+                </select>
+            </div>
             <!-- table view -->
             <InvestigationTableComponent
                 :investigations="investigations"
                 :cardView="cardView"
+                :invStatusDone="invStatusDone"
+                :invStatus="invStatus"
+            />
+            <!-- card view -->
+            <InvestigationCardComponent
+                :investigations="investigations"
+                :cardView="cardView"
+                :invStatusDone="invStatusDone"
+                :invStatus="invStatus"
             />
         </div>
     </div>
@@ -46,6 +58,13 @@ export default {
             type: Boolean,
         },
     },
+    computed: {
+        invStatusDone() {
+            return this.investigations.filter(
+                (invest) => invest.inv_status == this.invStatus
+            );
+        },
+    },
     methods: {
         // async getAllInvestigations() {
         //     const res = await axios.get(`${BASE_URL}${All_INVESTIGATIONS}`);
@@ -67,6 +86,7 @@ export default {
     data() {
         return {
             investigations: [],
+            invStatus: "",
         };
     },
 };
@@ -94,6 +114,7 @@ th {
     border: 1px solid gray;
     text-align: center;
     padding: 5px;
+    margin: 20px;
 }
 .invest-id {
     border-bottom: 1px solid gray;
